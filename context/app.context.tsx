@@ -16,7 +16,6 @@ export const AppContextProvider = ({menu, firstCategory, children}:PropsWithChil
         setMenuState(newMenu)
     }
     
-    
     return <AppContext.Provider value={{menu: menuState, firstCategory, setMenu}}>
         {children}
     </AppContext.Provider>
