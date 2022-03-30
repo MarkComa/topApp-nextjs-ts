@@ -16,7 +16,7 @@ function TopPage({ firstCategory, page, products }: TopPageProps): JSX.Element {
 	return <TopPageComponent 
 	firstCategory={firstCategory}
 	page={page}
-	product={products}
+	products={products}
 	/>;
 }
 

@@ -3,5 +3,5 @@ import { TopLevelCategory, TopPageModel } from './../../interfaces/page.interfac
 export interface TopPageComponentProps {
     firstCategory: TopLevelCategory;
     page: TopPageModel;
-    product: ProductModel[];
+    products: ProductModel[];
 }
