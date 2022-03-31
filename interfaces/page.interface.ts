@@ -35,15 +35,15 @@
         alias: string;
         title: string;
         category: string;
-        seoText: string;
+        seoText?: string;
         tagsTitle: string;
         metaTitle: string;
         metaDescription: string;
         firstCategory: TopLevelCategory;
-        advantages: TopPageAdvantage[];
+        advantages?: TopPageAdvantage[];
         createdAt: Date;
         updatedAt: Date;
-        hh: HhData;
+        hh?: HhData;
         qas: any[];
         addresses: any[];
         categoryOn: string;

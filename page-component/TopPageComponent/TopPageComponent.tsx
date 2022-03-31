@@ -1,16 +1,17 @@
 import React from 'react'
 import { TopPageComponentProps } from './TopPageComponent.props'
-import { Card, HhData, Htag, Tag } from '../../components'
+import { Advantages, Card, HhData, Htag, P, Sort, Tag } from '../../components'
 import s from './TopPageComponent.module.css'
 import { TopLevelCategory } from '../../interfaces/page.interface'
+import { SortEnum } from '../../components/Sort/Sort.props'
 
 export const TopPageComponent = ({page, products, firstCategory}:TopPageComponentProps):JSX.Element => {
   return (
-    <div className={s.wrapper}> 
+    <div> 
     <div className={s.title}>
       <Htag tag='h1' >{page.title}</Htag>
       {products &&<Tag size='m' color='gray'>{ products.length}</Tag>}
-      <span>Сортировка</span>
+      <Sort sort={SortEnum.Rating} setSort={()=>{}}/>
     </div>
     <div>
       {products && products.map(el => (<div key={el._id}>{el.title}</div>))}
@@ -20,8 +21,15 @@ export const TopPageComponent = ({page, products, firstCategory}:TopPageComponen
       {products &&<Tag size='m' color='red'>hh.ru</Tag>}
     </div>
     <div className={s.hh}>
-     {firstCategory == TopLevelCategory.Courses && <HhData {...page.hh}/>}
+      {firstCategory == TopLevelCategory.Courses && page.hh && <HhData {...page.hh}/>}
+      {page.advantages && page.advantages.length > 0 && <>
+        <Htag tag='h2'>Преимущества</Htag>
+        <Advantages advantages={page.advantages} />
+      </>}
     </div>
+        {page.seoText && <div className={s.seo} dangerouslySetInnerHTML={{__html: page.seoText}} />}
+        <Htag tag='h2'>Получаемые навыки</Htag>
+        {page.tags.map(el => <Tag key={el} color='primary'>{el}</Tag>)}
     </div>
   )
 }
