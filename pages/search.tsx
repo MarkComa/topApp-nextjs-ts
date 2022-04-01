@@ -8,7 +8,7 @@ import { MenuItem } from "../interfaces/menu.interface"
 function Search(): JSX.Element {
  
   return <>
-    dsds
+    Search
   </>
 }
 
