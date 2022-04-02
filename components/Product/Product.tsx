@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
 import { ProductProps } from "./Product.props";
 import s from "./Product.module.css";
 import cn from "classnames";
@@ -10,6 +10,7 @@ import { Tag } from "../Tag/Tag";
 import { Button } from "../Button/Button";
 import { declOfNum, priceRu } from "../../helpers/helpers";
 import { Divider } from "../Divider/Divider";
+import { Review } from "../Review/Review";
 import Image from 'next/image'
 
 export const Product = ({
@@ -17,8 +18,11 @@ export const Product = ({
 	className,
 	...props
 }: ProductProps): JSX.Element => {
+	const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false)
+
 	return (
-		<Card className={s.product} {...props}>
+	<>
+		<Card className={s.product}>
 			<div className={s.logo}>
 				<Image 
 					src={process.env.NEXT_PUBLIC_DOMAIN + product.image}
@@ -66,7 +70,8 @@ export const Product = ({
 						<span className={s.characteristicsValue}>{el.value}</span>
 					</div>
 				)
-			})}</div>
+			})}
+			</div>
 			<div className={s.advBlock}>
 				{product.advantages && (
 					<div className={s.advantages}>
@@ -85,12 +90,21 @@ export const Product = ({
 			<div className={s.actions}>
 				<Button apparance={"primary"}>Узнать подробнее</Button>
 				<Button
+					onClick={() => setIsReviewOpened(!isReviewOpened)}
 					apparance={"ghost"}
-					arrow='right'
-					className={s.actionBtn}>
+					arrow={!isReviewOpened ? 'right' : 'down'}
+					className={s.actionBtn}
+					>
 					Читать отзывы
 				</Button>
 			</div>
 		</Card>
+		<Card color='blue' className={cn(s.reviews,{
+			[s.opened] : isReviewOpened,
+			[s.closed] : !isReviewOpened
+		})}>
+			{ product.reviews.map(el => <Review review={el} key={el._id}/>)}
+		</Card>
+		</>
 	);
 };
