@@ -6,11 +6,13 @@ import { Input } from '../Input/Input'
 import { Rating } from '../Rating/Rating'
 import { Textarea } from '../Textarea/Textarea'
 import { Button } from '../Button/Button'
+import CloseIcon from './CloseIcon.svg'
 
 
 export const ReviewForm = ({ className, ...props}:ReviewFormProps):JSX.Element => {
  
   return (
+    <>
     <div className={cn(className, s.reviewForm)} {...props}>
       <Input placeholder='Имя' />
       <Input placeholder='Заголовок отзыва' className={s.title}/>
@@ -24,5 +26,13 @@ export const ReviewForm = ({ className, ...props}:ReviewFormProps):JSX.Element =
         <span className={s.info}>* Перед публикацией отзыв пройдет предварительную модерацию и проверку</span>
       </div>
     </div>
+    <div className={s.success}>
+      <div className={s.successTitle}>Ваш отзыв отправлен</div>
+      <div>
+        Спасибо, ваш отзыв будет опубликован после проверки
+      </div>
+      <CloseIcon className={s.close}/>
+    </div>
+    </>
   )
 }
