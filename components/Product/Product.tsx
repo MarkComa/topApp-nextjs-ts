@@ -123,10 +123,10 @@ export const Product = ({
 					[s.closed]: !isReviewOpened,
 				})}>
 				{product.reviews.map((el) => (
-					<>
-						<Review review={el} key={el._id} />
+					<div key={el._id}>
+						<Review review={el}  />
 						<Divider />
-					</>
+					</div>
 				))}
 				<ReviewForm productId={product._id}/>
 			</Card>

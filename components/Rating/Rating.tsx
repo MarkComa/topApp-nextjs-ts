@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+/* eslint-disable react/display-name */
+import React, { ForwardedRef, forwardRef, useEffect, useState } from 'react'
 import { RatingProps } from './Rating.props'
 import s from './Rating.module.css'
 import StarIcon from './star.svg'
 import cn from 'classnames'
 
-export const Rating = ({isEditable = false, rating, setRating,className,...props}:RatingProps):JSX.Element => {
+export const Rating = forwardRef(({error,isEditable = false, rating, setRating,className,...props}:RatingProps, ref: ForwardedRef<HTMLDivElement>):JSX.Element => {
   const [ratingArr, setRatingArr] = useState<JSX.Element[]>(new Array(5).fill(<></>));
 
   useEffect(()=>{
@@ -42,11 +43,14 @@ const onClick = (i:number) => {
   setRating(i);
 }
   const ratingEl = ratingArr.map((el,i)=> {
-  return <span key={i}>{el}</span>})
+  return <span className={cn({
+    [s.error] : error
+  })} key={i}>{el}</span>})
   return (
-    <div {...props}>
+    <div className={s.ratingWrapper} ref={ref} {...props}>
       {ratingEl}
+      {error && <span className={s.errorMsg}>{error.message}</span>}
     </div>
   )
 }
-
+)
