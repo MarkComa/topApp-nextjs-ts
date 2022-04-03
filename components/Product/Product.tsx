@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ProductProps } from "./Product.props";
 import s from "./Product.module.css";
 import cn from "classnames";
@@ -20,7 +20,16 @@ export const Product = ({
 	...props
 }: ProductProps): JSX.Element => {
 	const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false);
+	const refReviews = useRef(null);
 
+	const scrollToReview = () =>{
+		setIsReviewOpened(true);
+		refReviews.current?.scrollIntoView({
+			behavior: 'smooth',
+			block: 'start'
+		})
+	}
+	
 	return (
 		<>
 			<Card className={s.product}>
@@ -60,12 +69,13 @@ export const Product = ({
 				<div className={s.priceTitle}>цена</div>
 				<div className={s.creditTitle}>кредит</div>
 				<div className={s.ratingTitle}>
-					{product.reviewCount}
+					<a href='#ref'onClick={scrollToReview}>{product.reviewCount}
 					{declOfNum(product.reviewCount, [
 						" отзыв",
 						" отзыва",
 						" отзывов",
 					])}
+					</a>
 				</div>
 				<Divider className={cn(s.hr, s.hr1)} />
 				<div className={s.description}>{product.description}</div>
@@ -121,7 +131,7 @@ export const Product = ({
 				className={cn(s.reviews, {
 					[s.opened]: isReviewOpened,
 					[s.closed]: !isReviewOpened,
-				})}>
+				})} ref={refReviews}>
 				{product.reviews.map((el) => (
 					<div key={el._id}>
 						<Review review={el}  />

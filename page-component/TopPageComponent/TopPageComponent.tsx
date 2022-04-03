@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { TopPageComponentProps } from './TopPageComponent.props'
 import { Advantages, HhData, Htag, Product, Sort, Tag } from '../../components'
 import s from './TopPageComponent.module.css'
@@ -9,6 +9,10 @@ import { sortReducer } from './sort.reducer'
 export const TopPageComponent = ({page, products, firstCategory}:TopPageComponentProps):JSX.Element => {
   const [{products: sortedProducts, sort }, dispathSort] = useReducer(sortReducer, {products, sort: SortEnum.Rating})
   
+  useEffect(()=> {
+    dispathSort({type: 'reset', initialState: products})
+  }, [products] )
+
   const setSort = (sort: SortEnum) => {
     dispathSort({type: sort})
   } 
@@ -20,7 +24,7 @@ export const TopPageComponent = ({page, products, firstCategory}:TopPageComponen
       <Sort sort={sort} setSort={setSort}/>
     </div>
     <div>
-      {products && products.map(el => (<Product key={el._id} product={el} />))}
+      {sortedProducts && sortedProducts.map(el => (<Product key={el._id} product={el} />))}
     </div>
     <div className={s.hhTitle}>
       <Htag tag='h2' >Вакансии - {page.category}</Htag>

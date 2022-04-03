@@ -133,6 +133,9 @@
 	max-height: 0;
 	padding: 0;
 }
+.ratingTitle a{
+	color: var(--primary)
+}
 
 /* в данном случае для учебного проекта используем
 вместо линий grid-template-areas в реальном проекте смешивать не стоит*/
