@@ -1,6 +1,4 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
-import React, { useRef, useState } from "react";
+import React, { ForwardedRef, forwardRef, useRef, useState } from "react";
 import { ProductProps } from "./Product.props";
 import s from "./Product.module.css";
 import cn from "classnames";
@@ -13,12 +11,14 @@ import { Divider } from "../Divider/Divider";
 import { Review } from "../Review/Review";
 import Image from "next/image";
 import { ReviewForm } from "../ReviewForm/ReviewForm";
+import { motion } from 'framer-motion'
 
-export const Product = ({
+
+export const Product = motion(forwardRef(({
 	product,
 	className,
 	...props
-}: ProductProps): JSX.Element => {
+}: ProductProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element => {
 	const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false);
 	const refReviews = useRef(null);
 
@@ -31,7 +31,7 @@ export const Product = ({
 	}
 	
 	return (
-		<>
+		<div className={className} {...props} ref={ref}>
 			<Card className={s.product}>
 				<div className={s.logo}>
 					<Image
@@ -140,6 +140,6 @@ export const Product = ({
 				))}
 				<ReviewForm productId={product._id}/>
 			</Card>
-		</>
+		</div>
 	);
-};
+}));
