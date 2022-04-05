@@ -3,6 +3,7 @@ import { Footer, Header, Sidebar } from '.'
 import { LayoutProps } from './Layout.props'
 import s from './Layout.module.css'
 import { AppContextProvider, IAppContext } from '../context/app.context'
+import { Up } from '../components'
 
 const Layout = ({children, ...props}: LayoutProps):JSX.Element => {
   return (
@@ -23,8 +24,10 @@ export const withLayout = <T extends Record<string, unknown> & IAppContext>(Comp
       <AppContextProvider menu={props.menu} firstCategory={props.firstCategory}>
       <Layout> 
         <Component {...props}/>
+        <Up />
       </Layout>
       </AppContextProvider>
+
     )
   }
 }
