@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { ForwardedRef, forwardRef, useRef, useState } from "react";
 import { ProductProps } from "./Product.props";
 import s from "./Product.module.css";
@@ -21,6 +22,11 @@ export const Product = motion(forwardRef(({
 }: ProductProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element => {
 	const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false);
 	const refReviews = useRef(null);
+
+	const variants = {
+		visible: {opacity: 1, height: 'auto'},
+		hidden: {opacity: 0, height: 0}
+	}
 
 	const scrollToReview = () =>{
 		setIsReviewOpened(true);
@@ -126,20 +132,19 @@ export const Product = motion(forwardRef(({
 					</Button>
 				</div>
 			</Card>
-			<Card
-				color='blue'
-				className={cn(s.reviews, {
-					[s.opened]: isReviewOpened,
-					[s.closed]: !isReviewOpened,
-				})} ref={refReviews}>
-				{product.reviews.map((el) => (
-					<div key={el._id}>
-						<Review review={el}  />
-						<Divider />
-					</div>
-				))}
-				<ReviewForm productId={product._id}/>
-			</Card>
+			<motion.div animate={isReviewOpened ? 'visible' : 'hidden'} variants={variants} initial='hidden'>
+				<Card
+					color='blue'
+					className={s.reviews} ref={refReviews}>
+					{product.reviews.map((el) => (
+						<div key={el._id}>
+							<Review review={el}  />
+							<Divider />
+						</div>
+					))}
+					<ReviewForm productId={product._id}/>
+				</Card>
+			</motion.div>
 		</div>
 	);
 }));
