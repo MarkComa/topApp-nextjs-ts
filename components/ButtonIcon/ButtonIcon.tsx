@@ -8,7 +8,7 @@ export const ButtonIcon = ({apparance, icon, children, className, ...props}:Butt
         return <button
         className={cn(s.button, className, {
                 [s.primary]: apparance=='primary',
-                [s.ghost]: apparance=='white'
+                [s.white]: apparance=='white'
         })}
         {...props}>
                 <IconComp />
