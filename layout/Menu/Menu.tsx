@@ -100,7 +100,7 @@ export const Menu = (): JSX.Element => {
 							initial={m.isOpened ? 'visible' : 'hidden'}
 							animate={m.isOpened ? 'visible' : 'hidden'}
 							className={cn(s.secondLevelBlock)}>
-							{buildThirdLevel(m.pages, menuItem.route)}
+							{buildThirdLevel(m.pages, menuItem.route, m.isOpened ?? false)} 
 						</motion.div>
 						</div>
 					);
@@ -108,14 +108,14 @@ export const Menu = (): JSX.Element => {
 			</div>
 		);
 	};
-	const buildThirdLevel = (pages: PageItem[], route: string) => {
+	const buildThirdLevel = (pages: PageItem[], route: string, isOpened:boolean) => {
 		return pages.map((p) => (
 			<motion.div 
 				key={p._id}
 				variants={variantsChildren}
 			>
 			<Link href={`/${route}/${p.alias}`} >
-				<a
+				<a tabIndex={isOpened ? 0 : -1}
 					className={cn(s.thirdLevel, {
 						[s.thirdLevelActive]: `/${route}/${p.alias}`== router.asPath,
 					})}>
