@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, KeyboardEvent } from "react";
 import { AppContext } from "../../context/app.context";
 import { FirstLevelMenuItem, PageItem } from "../../interfaces/menu.interface";
 import s from "./Menu.module.css";
@@ -66,6 +66,14 @@ export const Menu = (): JSX.Element => {
 			</>
 		);
 	};
+
+	const openSecondLevelKey = (key: KeyboardEvent, secondCategory:string) => {
+		if (key.code == 'space' || key.code == 'Enter') {
+			key.preventDefault();
+			openSecondLevel(secondCategory);
+		}
+	}
+
 	const buildSecondLevel = (menuItem: FirstLevelMenuItem) => {
 		return (
 			<div className={s.secondBlock}>
@@ -79,7 +87,11 @@ export const Menu = (): JSX.Element => {
 					}
 					return (
 						<div key={m._id.secondCategory}>
-							<div className={s.secondLevel} onClick={()=> openSecondLevel(m._id.secondCategory)}>
+							<div 
+							tabIndex={0}
+							onKeyDown={(key: KeyboardEvent) => openSecondLevelKey(key, m._id.secondCategory)}
+							className={s.secondLevel}
+							onClick={()=> openSecondLevel(m._id.secondCategory)}>
 								{m._id.secondCategory}
 							</div>
 						<motion.div
